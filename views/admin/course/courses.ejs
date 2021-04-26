@@ -1,0 +1,48 @@
+<%- include('../../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body>
+        <%- include('../../includes/navigation.ejs') %>
+
+            <main>
+                <% if (courses.length > 0) { %>
+                    <div class="grid">
+                        <% for (let course of courses) { %>
+                            <article class="card course-item">
+                                <header class="card__header">
+                                    <h1 class="course__name">
+                                        <%= course.name %>
+                                    </h1>
+                                </header>
+                                <div class="card__content">
+                                    <h2 class="course__email">
+                                        <%= course.courseCode %>
+                                    </h2>
+                                    <h3 class="course__email">
+                                        <%= course.teacherId %>
+                                    </h3>
+                                    <h3 class="course__email">
+                                        <%= course.year %>
+                                    </h3>
+                                    <p class="course__description">
+                                        <%= course.description %>
+                                    </p>
+                                </div>
+                                <div class="card__actions">
+                                    <a href="/admin/edit-course/<%= course._id %>?edit=true" class="btn">Edit</a> 
+                                    <form action="/admin/delete-course" method="POST">
+                                        <input type="hidden" value="<%= course._id %>" name="courseId">
+                                        <button class="btn" type="submit">Delete</button>
+                                    </form>
+
+                                </div>
+                                
+                            </article>
+                            <% } %>
+                    </div>
+                    <% } else { %>
+                        <h1>No courses Found!</h1>
+                        <% } %>
+            </main>
+            <%- include('../../includes/end.ejs') %>
