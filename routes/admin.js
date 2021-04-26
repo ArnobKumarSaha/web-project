@@ -32,7 +32,7 @@ router.post('/delete-teacher', teacherAdminController.postDeleteTeacher);
 const courseAdminController = require('../controllers/admin/course_admin');
 
 
-// Adding Course
+// Adding course
 router.get('/add-course', courseAdminController.getAddCourse);
 router.post('/add-course', courseAdminController.postAddCourse);
 
@@ -48,6 +48,25 @@ router.post('/delete-course', courseAdminController.postDeleteCourse);
 
 
 
+
+
+
+const studentAdminController = require('../controllers/admin/student_admin');
+
+// Adding student
+router.get('/add-student', studentAdminController.getAddStudent);
+router.post('/add-student', studentAdminController.postAddStudent);
+
+// Showing student list
+router.get('/students', studentAdminController.getStudents);
+
+
+// Edit student
+router.get('/edit-student/:studentId', studentAdminController.getEditStudent);
+router.post('/edit-student', studentAdminController.postEditStudent);
+
+//Delete student
+router.post('/delete-student', studentAdminController.postDeleteStudent);
 
 
 module.exports = router;
