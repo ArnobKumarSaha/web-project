@@ -3,12 +3,21 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-
 var app = express();
-//const mongoConnect = require('./util/database').mongoConnect;
-const mongoose = require("mongoose");
 
-// view engine setup
+// Database related things 
+const mongoose = require("mongoose");
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+const MONGODB_URI = "mongodb+srv://arnobkumarsaha:sustcse16@cluster0.nj6lk.mongodb.net/myDatabase?retryWrites=true&w=majority";
+
+const csrf = require('csurf'); // to prevent csrf attack
+const flash = require('connect-flash'); // to help users by showing what error occured.
+const Student = require("./models/student");
+
+// only require related things above.
+// ____________________________________________________________________________________________________
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
@@ -19,47 +28,85 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+
+// Specifying the session storage & then use the middleware
+const store = new MongoDBStore({
+  uri: MONGODB_URI,
+  collection: 'sessions'
+});
+const csrfProtection = csrf();
+
+
+// session, crsf(cross site request forgery) & flash Middlewares
+app.use(
+  session({
+    httpOnly: false,
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: false,
+    store: store
+  })
+);
+app.use(csrfProtection);
+app.use(flash());
+
+// Check if the requester is authenticated or not
+app.use((req, res, next) => {
+  if (!req.session.user) {
+    return next();
+  }
+  Student.findById(req.session.user._id)
+    .then(user => {
+      req.user = user;
+      next();
+    })
+    .catch(err => console.log(err));
+});
+
+// res.locals variables are passed to every views.
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  //console.log(res.locals.isAuthenticated, " " , res.locals.csrfToken);
+  next();
+});
+
+
+// Middleware related things above.
+// ____________________________________________________________________________________________________
+
 // import Routes
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+var userRouter = require("./routes/user");
 var adminRouter = require("./routes/admin");
+var authRouter = require("./routes/auth");
+
+const errorController = require('./controllers/error');
 
 // Register routes
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/user", userRouter);
 app.use("/admin", adminRouter);
+app.use(authRouter);
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
 
-// error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+// If all the above routes failed..
+app.use(errorController.get404);
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
-});
 
-// connect Database
-/*
-mongoConnect( ()=>{
-  console.log('mongoConnect method is called.');
-  app.listen(3000);
-})
-*/
 
+// Connect to DB on port 3000.
 mongoose
   .connect(
-    "mongodb+srv://arnobkumarsaha:sustcse16@cluster0.nj6lk.mongodb.net/myDatabase?retryWrites=true&w=majority"
+    MONGODB_URI,
+    {
+      useUnifiedTopology: true,
+      useNewUrlParser: true
+    }
   )
   .then(result =>{
     app.listen(3000);
-    console.log("Yesss !");
+    console.log("Yesss . MongoDB connected !! ");
   })
   .catch(err =>{
     console.log(err);

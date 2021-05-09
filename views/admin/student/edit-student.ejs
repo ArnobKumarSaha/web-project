@@ -32,6 +32,7 @@
                 <input type="hidden" value="<%= student._id %>" name="studentId">
             <% } %>
 
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="btn" type="submit"><% if (editing) { %>Update student<% } else { %>Add student<% } %></button>
         </form>
     </main>

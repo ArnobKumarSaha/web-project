@@ -6,6 +6,9 @@ const teacherAdminController = require('../controllers/admin/teacher_admin');
 
 const router = express.Router();
 
+
+router.get('/', teacherAdminController.getIndexPage);
+
 // Adding Teacher
 router.get('/add-teacher', teacherAdminController.getAddTeacher);
 router.post('/add-teacher', teacherAdminController.postAddTeacher);
@@ -53,12 +56,12 @@ router.post('/delete-course', courseAdminController.postDeleteCourse);
 
 const studentAdminController = require('../controllers/admin/student_admin');
 
+// Showing student list
+router.get('/students', studentAdminController.getStudents);
+/*
 // Adding student
 router.get('/add-student', studentAdminController.getAddStudent);
 router.post('/add-student', studentAdminController.postAddStudent);
-
-// Showing student list
-router.get('/students', studentAdminController.getStudents);
 
 
 // Edit student
@@ -67,6 +70,6 @@ router.post('/edit-student', studentAdminController.postEditStudent);
 
 //Delete student
 router.post('/delete-student', studentAdminController.postDeleteStudent);
-
+*/
 
 module.exports = router;

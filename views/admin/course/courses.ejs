@@ -44,5 +44,6 @@
                     <% } else { %>
                         <h1>No courses Found!</h1>
                         <% } %>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             </main>
             <%- include('../../includes/end.ejs') %>

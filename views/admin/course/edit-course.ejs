@@ -5,6 +5,7 @@
 
 <body>
    <%- include('../../includes/navigation.ejs') %>
+   
 
     <main>
         <form class="course-form" action="/admin/<% if (editing) { %>edit-course<% } else { %>add-course<% } %>" method="POST">
@@ -31,7 +32,7 @@
             <% if (editing) { %>
                 <input type="hidden" value="<%= course._id %>" name="courseId">
             <% } %>
-
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="btn" type="submit"><% if (editing) { %>Update course<% } else { %>Add course<% } %></button>
         </form>
     </main>

@@ -31,7 +31,7 @@
             <% if (editing) { %>
                 <input type="hidden" value="<%= teacher._id %>" name="teacherId">
             <% } %>
-
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="btn" type="submit"><% if (editing) { %>Update teacher<% } else { %>Add teacher<% } %></button>
         </form>
     </main>

@@ -15,12 +15,16 @@ const studentSchema = new Schema({
     type: String,
     required: true
   },
-  department: {
+  /*department: {
     type: String,
     required: true
   },
   phone: {
     type: Number,
+    required: true
+  },*/
+  password: {
+    type: String,
     required: true
   }
 });

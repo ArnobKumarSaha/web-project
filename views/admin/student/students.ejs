@@ -22,22 +22,7 @@
                                     <h3 class="student__email">
                                         <%= student.regNo %>
                                     </h3>
-                                    <h3 class="student__email">
-                                        <%= student.phone %>
-                                    </h3>
-                                    <p class="student__description">
-                                        <%= student.department %>
-                                    </p>
                                 </div>
-                                <div class="card__actions">
-                                    <a href="/admin/edit-student/<%= student._id %>?edit=true" class="btn">Edit</a> 
-                                    <form action="/admin/delete-student" method="POST">
-                                        <input type="hidden" value="<%= student._id %>" name="studentId">
-                                        <button class="btn" type="submit">Delete</button>
-                                    </form>
-
-                                </div>
-                                
                             </article>
                             <% } %>
                     </div>
@@ -45,4 +30,5 @@
                         <h1>No students Found!</h1>
                         <% } %>
             </main>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <%- include('../../includes/end.ejs') %>

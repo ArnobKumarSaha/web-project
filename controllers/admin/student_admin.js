@@ -1,5 +1,6 @@
 const Student = require("../../models/student");
 
+/*
 // Just rendering admin/edit-student view with editing=false.
 exports.getAddStudent = (req, res, next) => {
   res.render("admin/student/edit-student", {
@@ -32,7 +33,7 @@ exports.postAddStudent = (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
-};
+};*/
 
 // Just rendering all the students , fetched from DB.
 exports.getStudents = (req, res, next) => {
@@ -46,7 +47,7 @@ exports.getStudents = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
-
+/*
 // edit=true has been set on admin/teachers edit link. Then it renders /admin/edit-student view.
 exports.getEditStudent = (req, res, next) => {
   const editMode = req.query.edit;
@@ -94,7 +95,7 @@ exports.postEditStudent = (req, res, next) => {
       res.redirect("/admin/students");
     })
     .catch((err) => console.log(err));
-};
+}; 
 
 // It just finds the student and deletes it.
 exports.postDeleteStudent = (req, res, next) => {
@@ -106,3 +107,4 @@ exports.postDeleteStudent = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+*/
