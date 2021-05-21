@@ -13,7 +13,7 @@ const teacherSchema = new Schema({
   },
   description: {
     type: String,
-    required: true
+    required: false
   },
   designation: {
     type: String,
@@ -24,6 +24,10 @@ const teacherSchema = new Schema({
     ref: 'User',
     required: true*/
     type: Number,
+    required: false
+  },
+  password: {
+    type: String,
     required: true
   }
 });

@@ -22,10 +22,30 @@
                 type="password" name="password" id="password" value="<%= oldInput.password %>">
             </div>
 
-            <div> 
-                <input type="radio" name="typeOfUser" id="student">Student 
-                <input type="radio" name="typeOfUser" id="teacher">Teacher
+            
+            <div>
+                <input type="radio" name="typeOfUser" id="student" value="student">Student 
+                <input type="radio" name="typeOfUser" id="teacher" value="teacher">Teacher
+
             </div>
+            <!--
+                <%
+                    function displayRadioValue() {
+                        var ele = document.getElementsByName('typeOfUser');
+
+                        console.log("Inside script.");
+                          
+                        for(i = 0; i < ele.length; i++) {
+                            if(ele[i].checked) conosle.log("Gender = ", ele[i].value);
+                        }
+                    }
+                %>
+
+                <button type="button" onclick="displayRadioValue()">
+                    OK
+                </button>
+            </div>
+            -->
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <div class="form-control center">
                 <button class="btn" type="submit">Login</button>

@@ -10,7 +10,7 @@
         <% if (errorMessage) { %>
             <div class="user-message user-message--error"><%= errorMessage %></div>
         <% } %>
-        <form class="login-form" action="/signup" method="POST" novalidate>
+        <form class="login-form" action="/signup-teacher" method="POST" novalidate>
             <div class="form-control">
                 <label for="email">E-Mail</label>
                 <input 
@@ -27,9 +27,9 @@
                 type="name" name="name" id="name" value="<%= oldInput.name %>">
             </div>
             <div class="form-control">
-                <label for="regNo">Registration no.</label>
-                <input class="<%= validationErrors.find(e => e.param === 'regNo') ? 'invalid' : '' %>"
-                type="number" name="regNo" id="regNo" value="<%= oldInput.regNo %>">
+                <label for="designation">Designation</label>
+                <input class="<%= validationErrors.find(e => e.param === 'designation') ? 'invalid' : '' %>"
+                type="name" name="designation" id="designation" value="<%= oldInput.designation %>">
             </div>
 
             <div class="form-control">
@@ -42,8 +42,13 @@
                 <input class="<%= validationErrors.find(e => e.param === 'confirmPassword') ? 'invalid' : '' %>"
                 type="password" name="confirmPassword" id="confirmPassword" value="<%= oldInput.confirmPassword %>">
             </div>
+
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button class="btn" type="submit">Signup</button>
+            <button class="btn" type="submit">Signup as Teacher</button>
+
+            <div class="form-control" >
+                <a href="/signup">Are you a Student ? Please SingUp here.</a> 
+            </div>
         </form>
     </main>
 <%- include('../includes/end.ejs') %>
