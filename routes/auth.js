@@ -3,6 +3,7 @@ const authController = require("../controllers/authController");
 const { check, body } = require("express-validator");
 const Student = require("../models/student");
 const Teacher = require("../models/teacher");
+const Admin = require("../models/admin");
 const router = express.Router();
 
 
@@ -17,7 +18,7 @@ router.post("/login",
     .withMessage('Please enter a valid email address.')
     .custom((value, { req }) => {
       const typeOfUser = req.body.typeOfUser;
-      if(typeOfUser == 'student'){
+      if(typeOfUser === 'student'){
         return Student.findOne({ email: value }).then(stuDoc => {
           if (!stuDoc) {
             return Promise.reject(
@@ -26,11 +27,20 @@ router.post("/login",
           }
         });
       }
-      else{
+      else if(typeOfUser === 'teacher'){
         return Teacher.findOne({ email: value }).then(teaDoc => {
           if (!teaDoc) {
             return Promise.reject(
               'No teacher with this email. Do you want to signUp ?'
+            );
+          }
+        });
+      }
+      else{
+        return Admin.findOne({ email: value }).then(adDoc => {
+          if (!adDoc) {
+            return Promise.reject(
+              'No Admin with this email Found.'
             );
           }
         });

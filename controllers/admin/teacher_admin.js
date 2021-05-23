@@ -1,10 +1,5 @@
 const Teacher = require("../../models/teacher");
 
-
-exports.getIndexPage = (req, res, next) => {
-  res.redirect("/admin/teachers");
-}
-
 // Just rendering admin/edit-teacher view with editing=false.
 exports.getAddTeacher = (req, res, next) => {
   res.render("admin/teacher/edit-teacher", {

@@ -14,9 +14,11 @@ const MONGODB_URI = "mongodb+srv://arnobkumarsaha:sustcse16@cluster0.nj6lk.mongo
 const csrf = require('csurf'); // to prevent csrf attack
 const flash = require('connect-flash'); // to help users by showing what error occured.
 const Student = require("./models/student");
+const Teacher = require("./models/teacher");
+const Admin = require("./models/admin");
 
 // only require related things above.
-// ____________________________________________________________________________________________________
+// _____________________________________________________________________________________________________________
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -55,48 +57,80 @@ app.use((req, res, next) => {
   if (!req.session.user) {
     return next();
   }
-  Student.findById(req.session.user._id)
-    .then(user => {
-      req.user = user;
-      next();
-    })
-    .catch(err => console.log(err));
+  if(req.session.typeOfUser === 'student')
+    Student.findById(req.session.user._id)
+      .then(user => {
+        req.user = user;
+        next();
+      })
+      .catch(err => console.log(err));
+  else if(req.session.typeOfUser === 'teacher')
+    Teacher.findById(req.session.user._id)
+      .then(user => {
+        req.user = user;
+        next();
+      })
+      .catch(err => console.log(err));
+  else
+    Admin.findById(req.session.user._id)
+      .then(user => {
+        req.user = user;
+        next();
+      })
+      .catch(err => console.log(err));
 });
 
+// isLoggedIn, user and typeOfUser of req.session are set in postLogin of authController
+// But Note that , req.user is set in the above middleware.
 // res.locals variables are passed to every views.
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
   res.locals.csrfToken = req.csrfToken();
   res.locals.currentUserName = " papapa";
+  res.locals.typeOfUser = " kichu ekta";
   if(res.locals.isAuthenticated){
     res.locals.currentUserName = req.user.name;
+    res.locals.typeOfUser = req.session.typeOfUser;
   }
   next();
 });
 
 
 // Middleware related things above.
-// ____________________________________________________________________________________________________
+// _____________________________________________________________________________________________________________
 
 // import Routes
 var indexRouter = require("./routes/index");
 var userRouter = require("./routes/user");
 var adminRouter = require("./routes/admin");
+var studentRouter = require("./routes/student");
+var teacherRouter = require("./routes/teacher");
 var authRouter = require("./routes/auth");
 
 const errorController = require('./controllers/error');
 
 // Register routes
-app.use("/", indexRouter);
-app.use("/user", userRouter);
+
+// only / , which renders the profile. (can redirect to /login) Also userType distribution will occurred here.
+app.use("/user", userRouter); 
+
+// /add-teacher, /teachers, /edit-teacher/:teacherId, /delete-teacher
+// /add-course, /courses, /edit-course/:courseId, /delete-course
+// /students
 app.use("/admin", adminRouter);
-app.use(authRouter);
+
+// Going to work in these two.
+app.use("/student", studentRouter);
+app.use("/teacher", teacherRouter);
+
+app.use("/", indexRouter); // only / , redirect to /user
+app.use(authRouter); // /login, /signup-student, /signup-teacher, /logout
 
 
 // If all the above routes failed..
 app.use(errorController.get404);
 
-
+// SideNote: views er attribute name gulu hoilo req.body.  url er '?' mark er aager gulu req.params, porer gulu req.query
 
 // Connect to DB on port 3000.
 mongoose
@@ -109,7 +143,7 @@ mongoose
   )
   .then(result =>{
     app.listen(3000);
-    console.log("Yesss . MongoDB connected !! ");
+    console.log("Yesss. MongoDB connected !!      Listening on port 3000.");
   })
   .catch(err =>{
     console.log(err);

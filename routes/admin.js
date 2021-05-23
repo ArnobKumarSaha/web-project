@@ -4,10 +4,12 @@ const express = require('express');
 
 const teacherAdminController = require('../controllers/admin/teacher_admin');
 
+const adminController = require('../controllers/admin/adminController');
+
 const router = express.Router();
 
 
-router.get('/', teacherAdminController.getIndexPage);
+router.get('/', adminController.getIndexPage);
 
 // Adding Teacher
 router.get('/add-teacher', teacherAdminController.getAddTeacher);

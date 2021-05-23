@@ -5,30 +5,34 @@
         <ul class="main-header__item-list">
 
             <li class="main-header__item">
-                <a class="<%= path === '/admin/students' ? 'active' : '' %>" href="/admin/students"> Students
+                <a class="<%= path === '/students' ? 'active' : '' %>" href="/students"> Students
                 </a>
             </li>
+            <!--
             <li class="main-header__item">
                 <a class="<%= path === '/admin/add-teacher' ? 'active' : '' %>" href="/admin/add-teacher">Add Teacher
                 </a>
             </li>
+            -->
             <li class="main-header__item">
-                <a class="<%= path === '/admin/teachers' ? 'active' : '' %>" href="/admin/teachers">Teachers
+                <a class="<%= path === '/teachers' ? 'active' : '' %>" href="/teachers">Teachers
                 </a>
             </li>
 
-            <li class="main-header__item">
-                <a class="<%= path === '/admin/add-course' ? 'active' : '' %>" href="/admin/add-course">Add Course
-                </a>
-            </li>
-            <li class="main-header__item">
-                <a class="<%= path === '/admin/courses' ? 'active' : '' %>" href="/admin/courses">Courses
-                </a>
-            </li>
+            <% if (typeOfUser === 'admin') { %>
+                <li class="main-header__item">
+                    <a class="<%= path === '/admin/add-course' ? 'active' : '' %>" href="/admin/add-course">Add Course
+                    </a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/admin/courses' ? 'active' : '' %>" href="/admin/courses">Courses
+                    </a>
+                </li>
+            <% } %>
 
 
             <li class="main-header__item">
-                <a class="<%= path === '/user' ? 'active' : '' %>" href="/user">My Profile
+                <a class="<%= ((path === '/user') || (path === '/student/studentProfile') || (path === '/teacher/teacherProfile') || (path === '/admin/indexPage')) ? 'active' : '' %>" href="/user">My Profile
                 </a>
             </li>
         </ul>

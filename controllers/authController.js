@@ -4,6 +4,7 @@ const { validationResult } = require('express-validator');
 // validate (Check) on the auth route file, And get the result here .. In auth Controller file.
 const Student = require('../models/student');
 const Teacher = require('../models/teacher');
+const Admin = require("../models/admin");
 
 exports.getLogin = (req, res, next) => {
   // If any logIn error occurs, flashing can be done on postLogin
@@ -51,79 +52,119 @@ exports.postLogin = (req, res, next) => {
   }
 
   // This block is for student login.
-  if(typeOfUser == 'student')
-  Student.findOne({ email: email })
-    .then(student => {
-      // student exists with this email , bcz we checked it already in auth route.
-      bcrypt
-        .compare(password, student.password)
-        .then(doMatch => {
-          if (doMatch) { // password validation
-            req.session.isLoggedIn = true;
-            req.session.user = student;
-            req.session.typeOfUser = typeOfUser;
-            return req.session.save(err => {
-              console.log(err);
-              res.redirect('/');
-            });
-          }
-          // Incorrect password entered.
+  if(typeOfUser == 'student'){
+    Student.findOne({ email: email })
+      .then(student => {
+        // student exists with this email , bcz we checked it already in auth route.
+        bcrypt
+          .compare(password, student.password)
+          .then(doMatch => {
+            if (doMatch) { // password validation
+              req.session.isLoggedIn = true;
+              req.session.user = student;
+              req.session.typeOfUser = typeOfUser;
+              return req.session.save(err => {
+                console.log(err);
+                res.redirect('/user');
+              });
+            }
+            // Incorrect password entered.
 
-          return res.status(422).render('auth/login', {
-            path: '/login',
-            pageTitle: 'Login',
-            errorMessage: 'Invalid email or password',
-            oldInput: {
-              email: req.body.email,
-              password: req.body.password,
-              typeOfUser: req.body.typeOfUser
-            },
-            validationErrors: errors.array()
+            return res.status(422).render('auth/login', {
+              path: '/login',
+              pageTitle: 'Login',
+              errorMessage: 'Invalid email or password',
+              oldInput: {
+                email: req.body.email,
+                password: req.body.password,
+                typeOfUser: req.body.typeOfUser
+              },
+              validationErrors: errors.array()
+            });
+          })
+          .catch(err => {
+            console.log(err);
+            res.redirect('/login');
           });
-        })
-        .catch(err => {
-          console.log(err);
-          res.redirect('/login');
-        });
-    })
-    .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
+    }
     // Now this block is For Teacher Login
-    else
-    Teacher.findOne({ email: email })
-    .then(teacher => {
-      // teacher exists with this email , bcz we checked it already in auth route.
-      bcrypt
-        .compare(password, teacher.password)
-        .then(doMatch => {
-          if (doMatch) { // password validation
-            req.session.isLoggedIn = true;
-            req.session.user = teacher;
-            req.session.typeOfUser = typeOfUser;
-            return req.session.save(err => {
-              console.log(err);
-              res.redirect('/');
-            });
-          }
-          // Incorrect password entered.
+    else if(typeOfUser == 'teacher') {
+      Teacher.findOne({ email: email })
+      .then(teacher => {
+        // teacher exists with this email , bcz we checked it already in auth route.
+        bcrypt
+          .compare(password, teacher.password)
+          .then(doMatch => {
+            if (doMatch) { // password validation
+              req.session.isLoggedIn = true;
+              req.session.user = teacher;
+              req.session.typeOfUser = typeOfUser;
+              return req.session.save(err => {
+                console.log(err);
+                res.redirect('/user');
+              });
+            }
+            // Incorrect password entered.
 
-          return res.status(422).render('auth/login', {
-            path: '/login',
-            pageTitle: 'Login',
-            errorMessage: 'Invalid email or password',
-            oldInput: {
-              email: req.body.email,
-              password: req.body.password,
-              typeOfUser: req.body.typeOfUser
-            },
-            validationErrors: errors.array()
+            return res.status(422).render('auth/login', {
+              path: '/login',
+              pageTitle: 'Login',
+              errorMessage: 'Invalid email or password',
+              oldInput: {
+                email: req.body.email,
+                password: req.body.password,
+                typeOfUser: req.body.typeOfUser
+              },
+              validationErrors: errors.array()
+            });
+          })
+          .catch(err => {
+            console.log(err);
+            res.redirect('/login');
           });
-        })
-        .catch(err => {
-          console.log(err);
-          res.redirect('/login');
-        });
-    })
-    .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
+    }
+    else {
+      Admin.findOne({ email: email })
+      .then(admin => {
+        // admin exists with this email , bcz we checked it already in auth route.
+        bcrypt
+          .compare(password, admin.password)
+          .then(doMatch => {
+            if (doMatch) { // password validation
+              req.session.isLoggedIn = true;
+              req.session.user = admin;
+              req.session.typeOfUser = typeOfUser;
+              //console.log("matched. ", req.session.isLoggedIn, req.session.user, req.session.typeOfUser);
+              return req.session.save(err => {
+                console.log(err);
+                res.redirect('/user');
+              });
+            }
+            // Incorrect password entered.
+
+            return res.status(422).render('auth/login', {
+              path: '/login',
+              pageTitle: 'Login',
+              errorMessage: 'Invalid email or password',
+              oldInput: {
+                email: req.body.email,
+                password: req.body.password,
+                typeOfUser: req.body.typeOfUser
+              },
+              validationErrors: errors.array()
+            });
+          })
+          .catch(err => {
+            console.log(err);
+            res.redirect('/login');
+          });
+      })
+      .catch(err => console.log(err));
+    }
 };
 
 
