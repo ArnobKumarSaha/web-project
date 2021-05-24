@@ -1,8 +1,7 @@
-const mongodb = require("mongodb");
-const MongoClient = mongodb.MongoClient;
-
+const mongoose = require('mongoose');
+const MONGODB_URI = "mongodb+srv://arnobkumarsaha:sustcse16@cluster0.nj6lk.mongodb.net/myDatabase?retryWrites=true&w=majority";
 let _db;
-
+/*
 const mongoConnect = (callback) =>{
 
     MongoClient.connect(
@@ -15,7 +14,21 @@ const mongoConnect = (callback) =>{
         console.log(err);
         throw err;
     });
+}*/
+
+const mongoConnect = (req, res, next) => {
+    mongoose.connect(
+        MONGODB_URI,
+        {
+        useUnifiedTopology: true,
+        useNewUrlParser: true
+        }
+    ).then(result => {
+        next();
+    })
+    .catch(err => console.log(err));
 }
+
 
 const getDb = () =>{
     if(_db){

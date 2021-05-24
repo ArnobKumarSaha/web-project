@@ -1,4 +1,3 @@
-var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
@@ -13,9 +12,6 @@ const MONGODB_URI = "mongodb+srv://arnobkumarsaha:sustcse16@cluster0.nj6lk.mongo
 
 const csrf = require('csurf'); // to prevent csrf attack
 const flash = require('connect-flash'); // to help users by showing what error occured.
-const Student = require("./models/student");
-const Teacher = require("./models/teacher");
-const Admin = require("./models/admin");
 
 // only require related things above.
 // _____________________________________________________________________________________________________________
@@ -53,47 +49,14 @@ app.use(csrfProtection);
 app.use(flash());
 
 // Check if the requester is authenticated or not
-app.use((req, res, next) => {
-  if (!req.session.user) {
-    return next();
-  }
-  if(req.session.typeOfUser === 'student')
-    Student.findById(req.session.user._id)
-      .then(user => {
-        req.user = user;
-        next();
-      })
-      .catch(err => console.log(err));
-  else if(req.session.typeOfUser === 'teacher')
-    Teacher.findById(req.session.user._id)
-      .then(user => {
-        req.user = user;
-        next();
-      })
-      .catch(err => console.log(err));
-  else
-    Admin.findById(req.session.user._id)
-      .then(user => {
-        req.user = user;
-        next();
-      })
-      .catch(err => console.log(err));
-});
+const checkType = require('./util/checkTypeOfUser');
+app.use(checkType);
 
 // isLoggedIn, user and typeOfUser of req.session are set in postLogin of authController
 // But Note that , req.user is set in the above middleware.
 // res.locals variables are passed to every views.
-app.use((req, res, next) => {
-  res.locals.isAuthenticated = req.session.isLoggedIn;
-  res.locals.csrfToken = req.csrfToken();
-  res.locals.currentUserName = " papapa";
-  res.locals.typeOfUser = " kichu ekta";
-  if(res.locals.isAuthenticated){
-    res.locals.currentUserName = req.user.name;
-    res.locals.typeOfUser = req.session.typeOfUser;
-  }
-  next();
-});
+const setLocals = require('./util/setReqLocals');
+app.use(setLocals);
 
 
 // Middleware related things above.
@@ -133,6 +96,7 @@ app.use(errorController.get404);
 // SideNote: views er attribute name gulu hoilo req.body.  url er '?' mark er aager gulu req.params, porer gulu req.query
 
 // Connect to DB on port 3000.
+
 mongoose
   .connect(
     MONGODB_URI,
@@ -148,5 +112,6 @@ mongoose
   .catch(err =>{
     console.log(err);
   });
+
 
 module.exports = app;

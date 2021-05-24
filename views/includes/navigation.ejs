@@ -30,6 +30,16 @@
                 </li>
             <% } %>
 
+            <% if (typeOfUser === 'student') { %>
+                <li class="main-header__item">
+                    <a class="<%= path === '/student/add-project' ? 'active' : '' %>" href="/student/add-project">Add Project
+                    </a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/student/projects' ? 'active' : '' %>" href="/student/projects">Projects
+                    </a>
+                </li>
+            <% } %>
 
             <li class="main-header__item">
                 <a class="<%= ((path === '/user') || (path === '/student/studentProfile') || (path === '/teacher/teacherProfile') || (path === '/admin/indexPage')) ? 'active' : '' %>" href="/user">My Profile

@@ -1,0 +1,50 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/project.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <% if (projects.length > 0) { %>
+                    <div class="grid">
+                        <% for (let project of projects) { %>
+                            <article class="card project-item">
+                                <header class="card__header">
+                                    <h1 class="project__name">
+                                        <%= project.name %>
+                                    </h1>
+                                </header>
+                                <div class="card__content">
+                                    <h2 class="project__email">
+                                        <%= project.courseCode %>
+                                    </h2>
+                                    <h3 class="project__email">
+                                        <%= project.supervisor %>
+                                    </h3>
+                                    <h3 class="project__email">
+                                        <%= project.githubLink %>
+                                    </h3>
+                                    <p class="project__description">
+                                        <%= project.description %>
+                                    </p>
+                                </div>
+                                <!--
+                                <div class="card__actions">
+                                    <a href="/admin/edit-project/<%= project._id %>?edit=true" class="btn">Edit</a> 
+                                    <form action="/admin/delete-project" method="POST">
+                                        <input type="hidden" value="<%= project._id %>" name="projectId">
+                                        <button class="btn" type="submit">Delete</button>
+                                    </form>
+                                </div>
+                                -->
+                                
+                            </article>
+                            <% } %>
+                    </div>
+                    <% } else { %>
+                        <h1>No projects Found!</h1>
+                        <% } %>
+            </main>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <%- include('../includes/end.ejs') %>
