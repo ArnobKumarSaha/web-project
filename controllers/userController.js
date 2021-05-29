@@ -1,18 +1,22 @@
+
+// Case : 1
+// After successful Login, authCotroller's postLogin() '/user' e redirect kore.
+
+
+// Case : 2
+// Simply '/' dileo '/user' e redirect hoy. 
+// Kuno user login kora thakle (isAuthenticated hoile), ei profile() e asbe.
+// login kora na thakle '/login' e redirect hobe.
+
 exports.profile = (req, res, next) => {
   if (req.session.typeOfUser === 'student'){
     res.redirect('/student/profile');
   }
-  if (req.session.typeOfUser === 'teacher'){
+  else if (req.session.typeOfUser === 'teacher'){
     res.redirect('/teacher/profile');
   }
-  if (req.session.typeOfUser === 'admin'){
+  else{
     res.redirect('/admin');
   }
-
-  // This will not be rendered actuall. Kept it just for checking purpose.
-  res.render('user/profile', {
-    path: '/user',
-    pageTitle: 'User'
-  });
 };
   

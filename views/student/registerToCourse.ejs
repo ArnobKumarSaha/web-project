@@ -1,0 +1,25 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/course.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+   
+
+    <main>
+        <form class="course-form" action="/student/register-to-course" method="POST">
+            <div class="form-control">
+                <label for="course">Course</label>
+                <select name="course" id="course">
+                    <% for (let sub of courseList) { %>
+                        <option value="<%= sub.name + '**' + sub.courseCode %>" selected="selected" width=23> <%= sub.name + " - " + sub.courseCode %> </option>
+                    <% } %>
+                </select>
+            </div>
+            
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit"> Register to this Course </button>
+        </form>
+    </main>
+<%- include('../includes/end.ejs') %>

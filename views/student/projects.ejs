@@ -6,27 +6,38 @@
         <%- include('../includes/navigation.ejs') %>
 
             <main>
+                <% if(isMine == true){ %>
+                    <div class="card__actions">
+                        <a href="/student/projects" class="btn">See everyone's projects</a> 
+                    </div>
+                <% } else { %>
+                    <div class="card__actions">
+                        <a href="/student/myprojects" class="btn">See only my projects</a> 
+                    </div>
+                <% } %>
+
+
                 <% if (projects.length > 0) { %>
                     <div class="grid">
                         <% for (let project of projects) { %>
                             <article class="card project-item">
                                 <header class="card__header">
                                     <h1 class="project__name">
-                                        <%= project.name %>
+                                        ProjectName : <%= project.name %>
                                     </h1>
                                 </header>
                                 <div class="card__content">
                                     <h2 class="project__email">
-                                        <%= project.courseCode %>
+                                        courseCode : <%= project.courseCode %>
                                     </h2>
                                     <h3 class="project__email">
-                                        <%= project.supervisor %>
+                                        supervisor : <%= project.supervisor %>
                                     </h3>
                                     <h3 class="project__email">
-                                        <%= project.githubLink %>
+                                        githubLink : <%= project.githubLink %>
                                     </h3>
                                     <p class="project__description">
-                                        <%= project.description %>
+                                        Description : <%= project.description %>
                                     </p>
                                 </div>
                                 <!--

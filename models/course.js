@@ -23,7 +23,18 @@ const courseSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Teacher',
         required: true
-    }
+    },
+    students: {
+      registeredStudents: [
+        {
+          studentId: {
+              type: Schema.Types.ObjectId,
+              ref: 'Student',
+              required: true
+          }
+        }
+      ]
+  }
   });
   
   module.exports = mongoose.model('Course', courseSchema);

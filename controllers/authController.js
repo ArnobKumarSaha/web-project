@@ -6,6 +6,23 @@ const Student = require('../models/student');
 const Teacher = require('../models/teacher');
 const Admin = require("../models/admin");
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************Login / logOut ******************************************************
+
+
+
 exports.getLogin = (req, res, next) => {
   // If any logIn error occurs, flashing can be done on postLogin
   let message = req.flash('error');
@@ -51,6 +68,8 @@ exports.postLogin = (req, res, next) => {
     return loginHelper(req,res,errors);
   }
 
+  console.log('typeOfUser = ', typeOfUser);
+
   // This block is for student login.
   if(typeOfUser == 'student'){
     Student.findOne({ email: email })
@@ -64,7 +83,7 @@ exports.postLogin = (req, res, next) => {
               req.session.user = student;
               req.session.typeOfUser = typeOfUser;
               return req.session.save(err => {
-                console.log(err);
+                console.log('err = ', err);
                 res.redirect('/user');
               });
             }
@@ -167,8 +186,52 @@ exports.postLogin = (req, res, next) => {
     }
 };
 
+exports.postLogout = (req, res, next) => {
+  req.session.destroy(err => {
+    if(err) console.log(err);
+    res.redirect('/');
+  });
+};
 
-// **********************************************************************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************Teacher SignUp ******************************************************
 
 exports.getSignupStudent = (req, res, next) => {
   let message = req.flash('error');
@@ -236,6 +299,40 @@ exports.postSignupStudent = (req, res, next) => {
       console.log(err);
     });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ************************************************Teacher SignUp ******************************************************
 
@@ -306,9 +403,3 @@ exports.postSignupTeacher = (req, res, next) => {
     });
 };
 
-exports.postLogout = (req, res, next) => {
-  req.session.destroy(err => {
-    console.log(err);
-    res.redirect('/');
-  });
-};

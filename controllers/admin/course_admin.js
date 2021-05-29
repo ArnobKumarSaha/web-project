@@ -22,6 +22,9 @@ exports.postAddCourse = (req, res, next) => {
     courseCode: courseCode,
     teacherId: teacherId,
     description: description,
+    students: {
+      registeredStudents: []
+    }
   });
   course
     .save()

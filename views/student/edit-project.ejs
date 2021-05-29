@@ -14,16 +14,11 @@
                 <input type="text" name="name" id="name" value="<% if (editing) { %><%= project.name %><% } %>">
             </div>
 
-
             <div class="form-control">
-                <label for="courseCode">CourseCode</label>
-                <input type="text" name="courseCode" id="courseCode" value="<% if (editing) { %><%= project.courseCode %><% } %>">
-            </div>
-            <div class="form-control">
+                <label for="course">Course</label>
                 <select name="course" id="course">
-
                     <% for (let sub of courseList) { %>
-                        <option value="<%= sub.name + sub.courseCode %>" selected="selected" width=23> <%= sub.name + " - " + sub.courseCode %> </option>
+                        <option value="<%= sub.name + '**' + sub.courseCode %>" selected="selected" width=23> <%= sub.name + " - " + sub.courseCode %> </option>
                     <% } %>
                 </select>
             </div>
@@ -35,13 +30,15 @@
             </div>
 
 
+            <!--
             <div class="form-control">
                 <label for="teacherId">TeacherId</label>
                 <input type="text" name="teacherId" id="teacherId" value="<% if (editing) { %><%= project.teacherId %><% } %>">
             </div>
+            -->
             <div class="form-control">
+                <label for="teacherId">TeacherId</label>
                 <select name="teacher" id="teacher">
-
                     <% for (let sub of teacherList) { %>
                         <option value="<%= sub%>" selected="selected" width=23> <%= sub %> </option>
                     <% } %>
