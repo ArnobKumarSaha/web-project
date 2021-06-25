@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.get('/profile', studentController.getProfilePage);
 
+router.get('/:student_regno', studentController.getProfileByReg);
+
 router.get('/add-project', studentController.getAddProject);
 
 router.post('/add-project', studentController.postAddProject);

@@ -1,0 +1,99 @@
+<div class="backdrop"></div>
+<header class="main-header">
+    <button id="side-menu-toggle">Menu</button>
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+
+            <li class="main-header__item">
+                <a class="<%= path === '/students' ? 'active' : '' %>" href="/students"> Students
+                </a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/teachers' ? 'active' : '' %>" href="/teachers">Teachers
+                </a>
+            </li>
+
+            <% if (typeOfUser === 'admin') { %>
+                <li class="main-header__item">
+                    <a class="<%= path === '/admin/add-course' ? 'active' : '' %>" href="/admin/add-course">Add Course
+                    </a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/admin/courses' ? 'active' : '' %>" href="/admin/courses">Courses
+                    </a>
+                </li>
+            <% } %>
+
+            <% if (typeOfUser === 'student') { %>
+                <li class="main-header__item">
+                    <a class="<%= path === '/student/add-project' ? 'active' : '' %>" href="/student/add-project">Add Project
+                    </a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/student/projects' ? 'active' : '' %>" href="/student/projects">Projects
+                    </a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/student/apply-for-thesis' ? 'active' : '' %>" href="/student/apply-for-thesis">Apply for Thesis
+                    </a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/student/courses' ? 'active' : '' %>" href="/student/courses">Courses
+                    </a>
+                </li>
+            <% } %>
+
+            <li class="main-header__item">
+                <a class="<%= ((path === '/user') || (path === '/student/studentProfile') || (path === '/teacher/teacherProfile') || (path === '/admin/indexPage')) ? 'active' : '' %>" href="/user">My Profile
+                </a>
+            </li>
+        </ul>
+
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+
+
+        <ul class="main-header__item-list">
+            <% if (!isAuthenticated) { %>
+                <li class="main-header__item">
+                    <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= ((path === '/signup-student') || (path === '/signup-teacher')) ? 'active' : '' %>" href="/signup-student">Signup</a>
+                </li>
+            <% } else { %>
+
+                <li class="main-header__item">
+                    <h3> Hello <%= currentUserName %> </h3>
+                </li>
+                
+                <li class="main-header__item">
+                    <form action="/logout" method="post">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button id="logout" type="submit">Logout</button>
+                    </form>
+                </li>
+            <% } %>
+        </ul>
+
+    </nav>
+</header>
+
+<nav class="mobile-nav">
+        <ul class="mobile-nav__item-list">
+                <li class="mobile-nav__item">
+                    <a class="<%= path === '/' ? 'active' : '' %>" href="/">Shop</a>
+                </li>
+                <li class="mobile-nav__item">
+                    <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
+                </li>
+                <li class="mobile-nav__item">
+                    <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product
+                    </a>
+                </li>
+                <li class="mobile-nav__item">
+                    <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products
+                    </a>
+                </li>
+            </ul>
+</nav>

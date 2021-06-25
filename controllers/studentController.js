@@ -1,6 +1,7 @@
 const Project = require('../models/project');
 const Teacher = require('../models/teacher');
 const Course = require('../models/course');
+const Student = require('../models/student');
 const mongoose = require('mongoose');
 
 exports.getProfilePage = (req, res, next) => {
@@ -8,6 +9,19 @@ exports.getProfilePage = (req, res, next) => {
     path: '/student/studentProfile',
     pageTitle: 'Student Profile'
   });
+};
+
+exports.getProfileByReg = (req, res, next) => {
+  const studentRegNo = req.params.student_regno;
+  Student.findOne({regNo: studentRegNo})
+  .then((stu) => {
+    console.log('stu = ', stu);
+    res.render('student/student-detail', {
+      path: '/student/studentProfile',
+      pageTitle: 'Student Profile',
+      student: stu
+    });
+  })
 };
 
 

@@ -1,54 +1,70 @@
+
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/forms.css">
-    <link rel="stylesheet" href="/css/auth.css">
+<link rel="stylesheet" href="/css/myCustomCssFiles/forms.css">
+<link rel="stylesheet" href="/css/myCustomCssFiles/auth.css">
 </head>
 
-<body>
-   <%- include('../includes/navigation.ejs') %>
+<body >
+	
+	<main>
+		<%- include('../includes/navigation.ejs') %>
 
-    <main>
-        <% if (errorMessage) { %>
-            <div class="user-message user-message--error"><%= errorMessage %></div>
-        <% } %>
-        <form class="login-form" action="/signup-teacher" method="POST" novalidate>
-            <div class="form-control">
-                <label for="email">E-Mail</label>
-                <input 
-                class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>"
-                type="email" 
-                name="email" 
-                id="email"
-                value="<%= oldInput.email %>">
-            </div>
+		<!-- Video -->
+			<section class="header-video">
+			<div id="hero_video">
+			<a href="#first_section" class="btn_explore hidden_tablet"><i class="ti-arrow-down"></i></a>
+			</div>
+			<img src="/img/video_fix.png" alt="" class="header-video--media" data-video-src="video/intro" data-teaser-source="video/intro" data-provider="" data-video-width="1920" data-video-height="960">
+		</section>
+		<!-- /header-video -->
 
-            <div class="form-control">
-                <label for="name">Name</label>
-                <input class="<%= validationErrors.find(e => e.param === 'name') ? 'invalid' : '' %>"
-                type="name" name="name" id="name" value="<%= oldInput.name %>">
-            </div>
-            <div class="form-control">
-                <label for="designation">Designation</label>
-                <input class="<%= validationErrors.find(e => e.param === 'designation') ? 'invalid' : '' %>"
-                type="name" name="designation" id="designation" value="<%= oldInput.designation %>">
-            </div>
 
-            <div class="form-control">
-                <label for="password">Password</label>
-                <input class="<%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>"
-                type="password" name="password" id="password" value="<%= oldInput.password %>">
-            </div>
-            <div class="form-control">
-                <label for="confirmPassword">Confirm Password</label>
-                <input class="<%= validationErrors.find(e => e.param === 'confirmPassword') ? 'invalid' : '' %>"
-                type="password" name="confirmPassword" id="confirmPassword" value="<%= oldInput.confirmPassword %>">
-            </div>
+		<div>
+			<% if (errorMessage) { %>
+				<div class="user-message user-message--error"><%= errorMessage %></div>
+			<% } %>
+			<form class="login-form" action="/signup-student" method="POST" novalidate>
+				<div class="mb-3">
+					<label for="email">E-Mail</label>
+					<input 
+					class="form-control <%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>"
+					type="email" 
+					name="email" 
+					id="email"
+					value="<%= oldInput.email %>"
+					style="background-color: rgb(223, 236, 231);>
+				</div>
 
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button class="btn" type="submit">Signup as Teacher</button>
+				<div class="mb-3">
+					<label for="name">Name</label>
+					<input class="form-control <%= validationErrors.find(e => e.param === 'name') ? 'invalid' : '' %>"
+					type="name" name="name" id="name" value="<%= oldInput.name %>" style="background-color: rgb(223, 236, 231);">
+				</div>
+				<div class="mb-3">
+					<label for="regNo">Registration no.</label>
+					<input class="form-control <%= validationErrors.find(e => e.param === 'regNo') ? 'invalid' : '' %>"
+					type="number" name="regNo" id="regNo" value="<%= oldInput.regNo %>" style="background-color: rgb(223, 236, 231);>
+				</div>
 
-            <div class="form-control" >
-                <a href="/signup">Are you a Student ? Please SingUp here.</a> 
-            </div>
-        </form>
-    </main>
-<%- include('../includes/end.ejs') %>
+				<div class="mb-3">
+					<label for="password">Password</label>
+					<input class="form-control <%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>"
+					type="password" name="password" id="password" value="<%= oldInput.password %>" style="background-color: rgb(223, 236, 231);>
+				</div>
+				<div class="mb-3">
+					<label for="confirmPassword">Confirm Password</label>
+					<input class="form-control <%= validationErrors.find(e => e.param === 'confirmPassword') ? 'invalid' : '' %>"
+					type="password" name="confirmPassword" id="confirmPassword" value="<%= oldInput.confirmPassword %>" style="background-color: rgb(223, 236, 231);>
+				</div>
+
+				<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+				<button class="btn" type="submit">Signup as Teacher</button>
+
+				<div class="mb-3" >
+					<a href="/signup-student">Are you a Student ?  Please SingUp here.</a> 
+				</div>
+			</form>
+		</div>
+	</main>
+		
+	<%- include('../includes/end.ejs') %>
