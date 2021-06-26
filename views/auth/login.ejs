@@ -25,19 +25,19 @@
             <% } %>
             <form class="login-form" action="/login" method="POST" novalidate>
 
-
-
                 <div class="mb-3">
                     <label for="email">E-Mail</label>
                     <input class="form-control <%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>"
-                    type="email" name="email" id="email" value="<%= oldInput.email %>" placeholder="name@example.com">
+                    type="email" name="email" id="email" value="<%= oldInput.email %>" placeholder="name@example.com"
+                    style="background-color: rgb(223, 236, 231);">
                 </div>
 
 
                 <div class="mb-3">
                     <label for="password">Password</label>
                     <input class="form-control <%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>"
-                    type="password" name="password" id="password" value="<%= oldInput.password %>">
+                    type="password" name="password" id="password" value="<%= oldInput.password %>"
+                    style="background-color: rgb(223, 236, 231);">
                 </div>
 
                 <div>
@@ -48,11 +48,6 @@
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <button class="btn_1 rounded full-width add_top_60" type="submit">Login to SUSTondemia</button>
 
-    
-                
-
-
-    
             </form>
          </div>
 

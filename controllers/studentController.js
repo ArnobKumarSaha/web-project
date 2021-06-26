@@ -5,17 +5,21 @@ const Student = require('../models/student');
 const mongoose = require('mongoose');
 
 exports.getProfilePage = (req, res, next) => {
-  res.render('student/studentProfile', {
-    path: '/student/studentProfile',
-    pageTitle: 'Student Profile'
-  });
+  const studentName = res.locals.currentUserName;
+  Student.findOne({name: studentName})
+  .then((stu) => {
+    res.render('student/student-detail', {
+      path: '/student/studentProfile',
+      pageTitle: 'Student Profile',
+      student: stu
+    });
+  })
 };
 
 exports.getProfileByReg = (req, res, next) => {
   const studentRegNo = req.params.student_regno;
   Student.findOne({regNo: studentRegNo})
   .then((stu) => {
-    console.log('stu = ', stu);
     res.render('student/student-detail', {
       path: '/student/studentProfile',
       pageTitle: 'Student Profile',
@@ -57,10 +61,19 @@ exports.getAddProject = (req, res, next) => {
 exports.postAddProject = async (req, res, next) => {
   const name = req.body.name;
   const description = req.body.description;
-  const studentId = req.body.studentId;
+  const studentReg = req.body.studentReg;
   const githubLink = req.body.githubLink;
   const course = req.body.course;
   const teacher = req.body.teacher;
+
+  let studentId;
+  try{
+    const s = await Student.findOne({regNo: studentreg});
+    studentId = studentId._id;
+  }
+  catch(e){
+    console.log(e);
+  };
 
 
   // Need to be change may be, when adding multiple student into project.

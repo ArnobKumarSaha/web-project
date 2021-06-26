@@ -41,19 +41,6 @@
             </li>
 
 
-
-
-
-
-
-
-
-
-
-            <li><span><a class="<%= path === '/students' ? 'active' : '' %>" href="/students">Students</a></span></li>
-
-            <li><span><a class="<%= path === '/teachers' ? 'active' : '' %>" href="/teachers">Teachers</a></span></li>
-
             <% if (typeOfUser === 'admin') { %>
                 <li><span><a class="<%= path === '/admin/add-course' ? 'active' : '' %>" href="/admin/add-course">Add Course</a></span></li>
 
@@ -77,28 +64,25 @@
                 
             <% } %>
 
-            <li><span><a class="<%= ((path === '/user') || (path === '/student/studentProfile') || (path === '/teacher/teacherProfile') || (path === '/admin/indexPage')) ? 'active' : '' %>" href="/user">My Profile</a></span></li>
-
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
 
             <% if (!isAuthenticated) { %>
                 <li><span><a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a></span></li>
-                <li class="main-header__item">
-                    <a class="<%= ((path === '/signup-student') || (path === '/signup-teacher')) ? 'active' : '' %>" href="/signup-student">Signup</a>
-                </li>
 
-                <li><span><a class="<%= path === '/signup-student' ? 'active' : '' %>" href="/signup-student">SignUp Student</a></span></li>
+                <li><span><a class="<%= ((path === '/signup-student') || (path === '/signup-teacher')) ? 'active' : '' %>" href="/signup-student">SignUp</a></span></li>
             <% } else { %>
 
-                <li class="main-header__item">
-                    <h3 style="color: forestgreen;"> Hello <%= currentUserName %> </h3>
-                </li>
+                <li><span>
+                    <a class="<%= ((path === '/user') || (path === '/student/studentProfile') || (path === '/teacher/teacherProfile') || (path === '/admin/indexPage')) ? 'active' : '' %>" href="/user">
+                        <h3 style="color: forestgreen;"><%= currentUserName %></h3>
+                    </a>
+                </span></li>
                 
                 <li class="main-header__item">
                     <form action="/logout" method="post">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <button id="logout" type="submit">Logout</button>
+                        <button class="btn btn_light" type="submit">Logout</button>
                     </form>
                 </li>
             <% } %>

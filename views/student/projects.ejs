@@ -1,0 +1,67 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/project.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <section id="hero_in" class="general">
+                    <div class="wrapper">
+                        <div class="container">
+                            <h1 class="fadeInUp"><span></span>Projects</h1>
+                        </div>
+                    </div>
+                </section>
+                
+                <% if(isMine == true){ %>
+                    <div class="card__actions">
+                        <a href="/student/projects" class="btn">See everyone's projects</a> 
+                    </div>
+                <% } else { %>
+                    <div class="card__actions">
+                        <a href="/student/myprojects" class="btn">See only my projects</a> 
+                    </div>
+                <% } %>
+
+
+                <% if (projects.length > 0) { %>
+                    <div class="grid">
+                        <% for (let project of projects) { %>
+                            <article class="card project-item">
+                                <div class="card__content">
+                                    <h1 class="project__name" style="background-color: rgb(217, 233, 228);">
+                                        ProjectName : <%= project.name %>
+                                    </h1>
+                                    <h2 class="project__email">
+                                        courseCode : <%= project.courseCode %>
+                                    </h2>
+                                    <h3 class="project__email">
+                                        supervisor : <%= project.supervisor %>
+                                    </h3>
+                                    <h3 class="project__email">
+                                        githubLink : <%= project.githubLink %>
+                                    </h3>
+                                    <p class="project__description">
+                                        Description : <%= project.description %>
+                                    </p>
+                                </div>
+                                <!--
+                                <div class="card__actions">
+                                    <a href="/admin/edit-project/<%= project._id %>?edit=true" class="btn">Edit</a> 
+                                    <form action="/admin/delete-project" method="POST">
+                                        <input type="hidden" value="<%= project._id %>" name="projectId">
+                                        <button class="btn" type="submit">Delete</button>
+                                    </form>
+                                </div>
+                                -->
+                                
+                            </article>
+                            <% } %>
+                    </div>
+                    <% } else { %>
+                        <h1>No projects Found!</h1>
+                        <% } %>
+            </main>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <%- include('../includes/end.ejs') %>

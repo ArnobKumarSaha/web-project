@@ -1,0 +1,55 @@
+<%- include('../../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body>
+        <%- include('../../includes/navigation.ejs') %>
+
+            <main>
+                <section id="hero_in" class="general">
+                    <div class="wrapper">
+                        <div class="container">
+                            <h1 class="fadeInUp"><span></span>Courses</h1>
+                        </div>
+                    </div>
+                </section>
+
+                <% if (courses.length > 0) { %>
+                    <div class="grid">
+                        <% for (let course of courses) { %>
+                            <article class="card course-item">
+                                <div class="card__content">
+                                    <h1 class="course__name">
+                                        <%= course.name %>
+                                    </h1>
+                                    <h2 class="course__email">
+                                        <%= course.courseCode %>
+                                    </h2>
+                                    <h3 class="course__email">
+                                        <%= course.teacherId %>
+                                    </h3>
+                                    <h3 class="course__email">
+                                        <%= course.year %>
+                                    </h3>
+                                    <p class="course__description">
+                                        <%= course.description %>
+                                    </p>
+                                </div>
+                                <div class="card__actions">
+                                    <a href="/admin/edit-course/<%= course._id %>?edit=true" class="btn">Edit</a> 
+                                    <form action="/admin/delete-course" method="POST">
+                                        <input type="hidden" value="<%= course._id %>" name="courseId">
+                                        <button class="btn" type="submit">Delete</button>
+                                    </form>
+
+                                </div>
+                                
+                            </article>
+                            <% } %>
+                    </div>
+                    <% } else { %>
+                        <h1>No courses Found!</h1>
+                        <% } %>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            </main>
+            <%- include('../../includes/end.ejs') %>

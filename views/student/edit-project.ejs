@@ -1,0 +1,72 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/course.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+   
+
+    <main>
+        <section id="hero_in" class="general">
+			<div class="wrapper">
+				<div class="container">
+					<h1 class="fadeInUp"><span></span>Add a Project</h1>
+				</div>
+			</div>
+		</section>
+        <div class="container center" style="width: 150mm">
+        <form class="login-form" action="/student/<% if (editing) { %>edit-project<% } else { %>add-project<% } %>" method="POST">
+            <div class="mb-3">
+                <label for="name">Name</label>
+                <input class="form-control" type="text" name="name" id="name" value="<% if (editing) { %><%= project.name %><% } %>"
+                style="background-color: rgb(223, 236, 231);">
+            </div>
+
+            <div class="mb-3">
+                <label for="course">Course</label>
+                <select name="course" id="course">
+                    <% for (let sub of courseList) { %>
+                        <option value="<%= sub.name + '**' + sub.courseCode %>" selected="selected" width=23> <%= sub.name + " - " + sub.courseCode %> </option>
+                    <% } %>
+                </select>
+            </div>
+
+
+            <div class="mb-3">
+                <label for="studentId">Student registration No</label>
+                <input class="form-control" type="text" name="studentReg" id="studentReg" value="<% if (editing) { %><%= project.regNo %><% } %>"
+                style="background-color: rgb(223, 236, 231);">
+            </div>
+
+            <div class="mb-3">
+                <label for="teacherId">TeacherId</label>
+                <select name="teacher" id="teacher">
+                    <% for (let sub of teacherList) { %>
+                        <option value="<%= sub%>" selected="selected" width=23> <%= sub %> </option>
+                    <% } %>
+                </select>
+            </div>
+
+
+            <div class="mb-3">
+                <label for="githubLink">GithubLink</label>
+                <input class="form-control" type="text" name="githubLink" id="githubLink" value="<% if (editing) { %><%= project.githubLink %><% } %>"
+                style="background-color: rgb(223, 236, 231);">
+            </div>
+            <div class="mb-3">
+                <label for="description">Description</label>
+                
+                <input class="form-control" type="text" name="description" id="description" value="<% if (editing) { %><%= project.description %><% } %>"
+                style="background-color: rgb(223, 236, 231);">
+            </div>
+            <% if (editing) { %>
+                <input class="form-control" type="hidden" value="<%= project._id %>" name="projectId"
+                style="background-color: rgb(223, 236, 231);">
+            <% } %>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit"><% if (editing) { %>Update Project<% } else { %>Add project<% } %></button>
+        </form>
+        </div>
+    </main>
+<%- include('../includes/end.ejs') %>

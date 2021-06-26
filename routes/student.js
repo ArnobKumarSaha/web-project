@@ -8,8 +8,6 @@ const router = express.Router();
 
 router.get('/profile', studentController.getProfilePage);
 
-router.get('/:student_regno', studentController.getProfileByReg);
-
 router.get('/add-project', studentController.getAddProject);
 
 router.post('/add-project', studentController.postAddProject);
@@ -41,5 +39,7 @@ router.get('/mycourses', studentController.getMyCourses);
 router.get('/register-to-course', studentController.getRegisterToCourse);
 
 router.post('/register-to-course', studentController.postRegisterToCourse);
+
+router.get('/:student_regno', studentController.getProfileByReg);
 
 module.exports = router;
