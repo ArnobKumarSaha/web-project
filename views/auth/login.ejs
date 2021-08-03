@@ -1,0 +1,57 @@
+
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/myCustomCssFiles/forms.css">
+    <link rel="stylesheet" href="/css/myCustomCssFiles/auth.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+
+    <main>
+
+   		<!-- Video -->
+		<section class="header-video">
+			<div id="hero_video">
+            <a href="#first_section" class="btn_explore hidden_tablet"><i class="ti-arrow-down"></i></a>
+			</div>
+			<img src="/img/video_fix.png" alt="" class="header-video--media" data-video-src="video/intro" data-teaser-source="video/intro" data-provider="" data-video-width="1920" data-video-height="960">
+		</section>
+		<!-- /header-video -->
+
+        <div >
+            <% if (errorMessage) { %>
+                <div style="margin-top: 2%; color:black;" class="user-message user-message--error"><%= errorMessage %></div>
+            <% } %>
+            <form style="margin-top: 3%;" class="login-form" action="/login" method="POST" novalidate>
+
+                <div style="margin: 2%" class="mb-3">
+                    <label for="email">E-Mail</label>
+                    <input class="form-control <%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>"
+                    type="email" name="email" id="email" value="<%= oldInput.email %>" placeholder="name@example.com"
+                    style="background-color: rgb(223, 236, 231);">
+                </div>
+
+
+                <div style="margin: 2%;" class="mb-3">
+                    <label for="password">Password</label>
+                    <input class="form-control <%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>"
+                    type="password" name="password" id="password" value="<%= oldInput.password %>"
+                    style="background-color: rgb(223, 236, 231);">
+                </div>
+
+                <div style="display: flex; justify-content: space-between;">
+                    <input type="radio" name="typeOfUser" id="student" value="student">Student 
+                    <input type="radio" name="typeOfUser" id="teacher" value="teacher">Teacher
+                    <input type="radio" name="typeOfUser" id="admin" value="admin">Admin
+                </div>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button class="btn_1 rounded full-width add_top_60" type="submit">Login to SUSTondemia</button>
+
+            </form>
+         </div>
+
+
+        
+    </main>
+<%- include('../includes/end.ejs') %>

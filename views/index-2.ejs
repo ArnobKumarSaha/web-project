@@ -1,0 +1,228 @@
+<%- include('includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/myCustomCssFiles/forms.css">
+    <link rel="stylesheet" href="/css/myCustomCssFiles/auth.css">
+</head>
+
+<body>
+	
+	<%- include('includes/navigation.ejs') %>
+	
+	<main>
+
+		<!-- Video -->
+		<section class="header-video">
+			<div id="hero_video">
+				<div>
+					<h3><strong>Top courses</strong><br>on SUSTondemia</h3>
+					<!-- <p>Eam fastidii erroribus corrumpit cu, in quo epicuri recusabo, <strong>est vocent eleifend</strong> inimicus at.</p> -->
+				</div>
+				<a href="#first_section" class="btn_explore hidden_tablet"><i class="ti-arrow-down"></i></a>
+			</div>
+			<img src="/img/video_fix.png" alt="" class="header-video--media" data-video-src="video/intro" data-teaser-source="video/intro" data-provider="" data-video-width="1920" data-video-height="960">
+		</section>
+		<!-- /header-video -->
+
+
+		<ul id="grid_home" class="clearfix">
+			<li>
+				<a href="#0" class="img_container">
+					<img src="http://via.placeholder.com/600x400/ccc/fff/grid_home_1.jpg" alt="">
+					<div class="short_info">
+						<h3><strong>Latest SUSTondemia</strong>Courses</h3>
+						<div><span class="btn_1 rounded">Read more</span></div>
+					</div>
+				</a>
+			</li>
+			<li>
+				<a href="#0" class="img_container">
+					<img src="http://via.placeholder.com/600x400/ccc/fff/grid_home_1.jpg" alt="">
+					<div class="short_info">
+						<h3><strong>Community</strong>Students</h3>
+						<div><span class="btn_1 rounded">Read more</span></div>
+					</div>
+				</a>
+			</li>
+			<li>
+				<a href="#0" class="img_container">
+					<img src="http://via.placeholder.com/600x400/ccc/fff/grid_home_1.jpg" alt="">
+					<div class="short_info">
+						<h3><strong>Admission</strong>Apply</h3>
+						<div><span class="btn_1 rounded">Submit</span></div>
+					</div>
+				</a>
+			</li>
+		</ul>
+
+		<!--Course List-->
+		<div class="container-fluid margin_120_0" id="first_section">
+			<div class="main_title_2">
+				<span><em></em></span>
+				<h2>SUSTondemia Popular Courses</h2>
+				<p>All courses on SUSTondemia are taken by Worldclass Teachers</p>
+				<p>Best courses for a better learning curve.</p>
+			</div>
+			<div id="reccomended" class="owl-carousel owl-theme">
+				<!--
+				<div class="item">
+					<div class="box_grid">
+						<figure>
+							<a href="#0" class="wish_bt"></a>
+							<a href="course-detail.html">
+								<div class="preview"><span>Preview course</span></div><img src="http://via.placeholder.com/800x533/ccc/fff/course__list_1.jpg" class="img-fluid" alt=""></a>
+							<div class="price">$39</div>
+
+						</figure>
+						<div class="wrapper">
+							<small>Category</small>
+							<h3>Persius delenit has cu</h3>
+							<p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
+							<div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(145)</small></div>
+						</div>
+						<ul>
+							<li><i class="icon_clock_alt"></i> 1h 30min</li>
+							<li><i class="icon_like"></i> 890</li>
+							<li><a href="course-detail.html">Enroll now</a></li>
+						</ul>
+					</div>
+				</div>
+				-->
+
+				<% if(courses.length > 0) { %>
+				<% for(let course of courses){ %>
+
+					<div class="item">
+						<div class="box_grid">
+							<figure>
+								<a href="#0" class="wish_bt"></a>
+								<a href="/course/<%=course.courseCode%>" style="color: rgb(161, 224, 240);"><img src="http://via.placeholder.com/800x533/ccc/0000FF/course__list_6.jpg?text=<%= course.name%>" class="img-fluid" alt=""></a>
+								<div class="price">$54</div>
+								<div class="preview"><span>Preview course</span></div>
+							</figure>
+							<div class="wrapper">
+								<small><%= course.courseCode%> </small>
+								<h3><%= course.name%></h3>
+								<p> Course started on <%= course.year %></p>
+								<p> <%= course.description%> </p>
+								<div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i> <small>(<%= Math.floor((Math.random() * 100) + 10);%>)</small></div>
+							</div>
+							<ul>
+								<li><i class="icon_clock_alt"></i> <%= Math.floor((Math.random() * 10) + 0);%> h <%= Math.floor((Math.random() * 60) + 1);%>min</li>
+								<li><i class="icon_like"></i> <%= Math.floor((Math.random() * 100) + 100);%> </li>
+								<li><a href="/course/<%=course.courseCode%>">Enroll now</a></li>
+							</ul>
+						</div>
+					</div>
+
+				<% } %> 
+				<% } else{ %>
+					<h2> No courses found ! </h2>
+				<% } %>
+				<!-- /item -->
+			</div>
+			<!-- /carousel -->
+			<div class="container">
+				<p class="btn_home_align"><a href="/courses" class="btn_1 rounded">View all courses</a></p>
+			</div>
+			<!-- /container -->
+			<hr>
+		</div>
+
+		<!-- Teacher List-->
+		<div class="container margin_30_95">
+			<div class="main_title_2">
+				<span><em></em></span>
+				<h2>SUSTondemia Faculty list</h2>
+				<p>They are always besides you. For making a better you.</p>
+			</div>
+			<div class="row">
+				<% if(teachers.length > 0) { %>
+					<% for (let teacher of teachers) { %>
+
+						<div class="col-lg-4 col-md-6 wow" data-wow-offset="150">
+							<a href="/teacher/<%=teacher.email%>" class="grid_item">
+								<figure class="block-reveal">
+									<div class="block-horizzontal"></div>
+									<img src="http://via.placeholder.com/1000x500?text=+" class="img-fluid" alt="">
+									<div class="info">
+										<small style="color: rgb(127, 0, 139);"><i class="ti-layers"></i> <%= teacher.name %> </small>
+										<h3 style="color: aqua;"><%= teacher.email %></h3>
+										<h3 style="color: chocolate;"><%= teacher.designation %></h3>
+										<h3><%= teacher.description %></h3>
+										<h3><%= teacher.phone %></h3>
+									</div>
+								</figure>
+							</a>
+						</div>
+
+					<% } %>
+				<% } else{ %>
+					<h2> No Teacher found. </h2>
+				<% } %>
+
+				<!--
+				<div class="col-lg-4 col-md-6 wow" data-wow-offset="150">
+					<a href="#0" class="grid_item">
+						<figure class="block-reveal">
+							<div class="block-horizzontal"></div>
+							<img src="http://via.placeholder.com/800x533/ccc/fff/course_5.jpg" class="img-fluid" alt="">
+							<div class="info">
+								<small><i class="ti-layers"></i>23 Programmes</small>
+								<h3>Law and Criminology</h3>
+							</div>
+						</figure>
+					</a>
+				</div>
+				-->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+
+		<div class="bg_color_1">
+			<div class="container margin_120_95">
+				<div class="main_title_2">
+					<span><em></em></span>
+					<h2>News and Events</h2>
+					<p></p>
+				</div>
+				<div class="row">
+					<div class="col-lg-6">
+						<a class="box_news" href="#0">
+							<figure><img src="http://via.placeholder.com/500x333/ccc/fff/news_home_1.jpg" alt="">
+								<figcaption><strong>28</strong>Dec</figcaption>
+							</figure>
+							<ul>
+								<li>Mark Twain</li>
+								<li>20.11.2017</li>
+							</ul>
+							<h4>"SQUARE International Conference on Biotechnology in Health and Agriculture-2017"u</h4>
+							<p>The 3rd GNOBB conference, SQUARE ICBHA-2017 will be held on 29-30 December, 2017 at Nabab Nawab Ali Chowdhury Senate Bhavan, University of Dhaka, Bangladesh.
+								Registration Fee:....</p>
+						</a>
+					</div>
+					<!-- /box_news -->
+					<div class="col-lg-6">
+						<a class="box_news" href="#0">
+							<figure><img src="http://via.placeholder.com/500x333/ccc/fff/news_home_2.jpg" alt="">
+								<figcaption><strong>28</strong>Dec</figcaption>
+							</figure>
+							<ul>
+								<li>Jhon Doe</li>
+								<li>20.11.2017</li>
+							</ul>
+							<h4>Petex donate IPM Suite software licenses worth over £1.3m to Petroleum Students</h4>
+							<p>Petroleum Experts (Petex) is an Edinburgh based software engineering company which 
+								specialises in the development of software tools for the oil and gas industry. With....</p>
+						</a>
+					</div>
+				</div>
+				<!-- /row -->
+				<p class="btn_home_align"><a href="blog.html" class="btn_1 rounded">View all news</a></p>
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /bg_color_1 -->
+	</main>
+	<!-- /main -->
+	
+	<%- include('includes/end.ejs') %>

@@ -1,0 +1,50 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/project.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <div class="card__actions">
+                    <a href="/student/register-to-course" class="btn">Register to a course now.</a> 
+                    <% if(isMine == true){ %>
+                        <a href="/student/courses" class="btn">See everyone's courses</a> 
+                    <% } else { %>
+                        <a href="/student/mycourses" class="btn">See only my courses</a> 
+                    <% } %>
+                </div>
+
+                <% if (courses.length > 0) { %>
+                    <div class="grid">
+                        <% for (let course of courses) { %>
+                            <article class="card project-item">
+                                <header class="card__header">
+                                    <h1 class="project__name">
+                                        <%= course.name %>
+                                    </h1>
+                                </header>
+                                <div class="card__content">
+                                    <h2 class="project__email">
+                                        <%= course.courseCode %>
+                                    </h2>
+                                    <h3 class="project__email">
+                                        <%= course.teacherId %>
+                                    </h3>
+                                    <h3 class="project__email">
+                                        <%= course.year %>
+                                    </h3>
+                                    <p class="project__description">
+                                        <%= course.description %>
+                                    </p>
+                                </div>
+                                
+                            </article>
+                            <% } %>
+                    </div>
+                    <% } else { %>
+                        <h1>No Courses Found!</h1>
+                        <% } %>
+            </main>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <%- include('../includes/end.ejs') %>

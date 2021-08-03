@@ -1,0 +1,75 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/project.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <section id="hero_in" class="general">
+                    <div class="wrapper">
+                        <div class="container">
+                            <h1 class="fadeInUp"><span></span>Thesis Requests</h1>
+                        </div>
+                    </div>
+                </section>
+
+
+
+
+                <% if (notifications.length > 0) { %>
+                   
+
+                    <div style="display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap; cursor: pointer; margin: 1%;">
+                        <% itemCounter = 0 %>
+                        <% for (let noti of notifications) { %>
+                        
+                                <div style=" background-color: rgb(228, 228, 228); color: black; border-radius: 5px; text-align: center; margin: 3%; border: 3px;" class="card__content">
+                                    <h4 style="margin: 2%;">
+                                        <b>Thesis Name</b> : <%= noti.name %>
+                                    </h4>
+                                    <h4 style="margin: 2%;">
+                                        <b>Description</b> : <%= noti.description %>
+                                    </h4>
+                                    <h4 style="margin: 2%;" >
+                                        <b>Github Link</b> : <%= noti.githubLink %>
+                                    </h4 style="margin: 2%;">
+                                    <p style="margin: 2%;" >
+                                        <b>CourseCode</b> : CSE480
+                                    </p>
+
+
+                                    <h4 style="margin: 2%;" >
+                                        <b>Student Names</b> : 
+                                    </h4 style="margin: 2%;">
+
+                                    <h4> <%=studentArray[itemCounter].student1 %> </h4>
+                                    <h4> <%=studentArray[itemCounter].student2 %> </h4>
+
+                                    
+                                    <a href="/teacher/thesis" class="btn">More details</a> 
+
+                                    <% if(!noti.isTaken){ %>
+                                    <a href="/teacher/thesis" class="btn">Add this team to your choice list.</a> 
+                                    <% } else { %>
+                                        This team has been already choosen. Team number is in rank 02 of your choice list.
+                                    <% } %>
+                                </div>
+                                
+                                <% itemCounter = itemCounter + 1; %> 
+                  
+                            <% } %>
+                    </div>
+                    <% } else { %>
+                        <h1>No Thesis requests Found!</h1>
+                        <% } %>
+
+
+
+
+
+
+
+            </main>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <%- include('../includes/end.ejs') %>

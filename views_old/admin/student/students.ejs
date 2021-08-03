@@ -1,0 +1,34 @@
+<%- include('../../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body>
+        <%- include('../../includes/navigation.ejs') %>
+
+            <main>
+                <% if (students.length > 0) { %>
+                    <div class="grid">
+                        <% for (let student of students) { %>
+                            <article class="card student-item">
+                                <header class="card__header">
+                                    <h1 class="student__name">
+                                        <%= student.name %>
+                                    </h1>
+                                </header>
+                                <div class="card__content">
+                                    <h2 class="student__email">
+                                        <%= student.email %>
+                                    </h2>
+                                    <h3 class="student__email">
+                                        <%= student.regNo %>
+                                    </h3>
+                                </div>
+                            </article>
+                            <% } %>
+                    </div>
+                    <% } else { %>
+                        <h1>No students Found!</h1>
+                        <% } %>
+            </main>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <%- include('../../includes/end.ejs') %>

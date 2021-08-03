@@ -1,0 +1,39 @@
+<%- include('../../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/course.css">
+</head>
+
+<body>
+   <%- include('../../includes/navigation.ejs') %>
+   
+
+    <main>
+        <form class="course-form" action="/admin/<% if (editing) { %>edit-course<% } else { %>add-course<% } %>" method="POST">
+            <div class="form-control">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" value="<% if (editing) { %><%= course.name %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="courseCode">courseCode</label>
+                <input type="text" name="courseCode" id="courseCode" value="<% if (editing) { %><%= course.courseCode %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="year">Year</label>
+                <input type="date" name="year" id="year" value="<% if (editing) { %><%= course.year %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="teacherId">teacherId</label>
+                <input type="text" name="teacherId" id="teacherId" value="<% if (editing) { %><%= course.teacherId %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" rows="5"><% if (editing) { %><%= course.description %><% } %></textarea>
+            </div>
+            <% if (editing) { %>
+                <input type="hidden" value="<%= course._id %>" name="courseId">
+            <% } %>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit"><% if (editing) { %>Update course<% } else { %>Add course<% } %></button>
+        </form>
+    </main>
+<%- include('../../includes/end.ejs') %>

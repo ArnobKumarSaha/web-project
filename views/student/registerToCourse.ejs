@@ -1,0 +1,34 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/course.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+   
+
+    <main>
+        <section id="hero_in" class="general">
+			<div class="wrapper">
+				<div class="container">
+					<h1 class="fadeInUp"><span></span>Register to a Course</h1>
+				</div>
+			</div>
+		</section>
+        <div class="container center" style="width: 150mm">
+            <form class="course-form" action="/student/register-to-course" method="POST">
+                <div class="form-control">
+                    <label for="course">Course</label>
+                    <select name="course" id="course">
+                        <% for (let sub of courseList) { %>
+                            <option value="<%= sub.name + '**' + sub.courseCode %>" selected="selected" width=23> <%= sub.name + " - " + sub.courseCode %> </option>
+                        <% } %>
+                    </select>
+                </div>
+                
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button class="btn" type="submit"> Register to this Course </button>
+            </form>
+        </div>
+    </main>
+<%- include('../includes/end.ejs') %>
